@@ -33,3 +33,14 @@ def f(*args, **kwargs):
 @curried(2)
 def member(objs, obj):
     return contains(objs, obj)
+
+@curried(2)
+def rot(n, string, charset=alph):
+    result = []
+    for char in string:
+        if char in charset:
+            result.append(charset[(charset.index(char) + n) % len(charset)])
+        else:
+            result.append(char)
+
+    return ''.join(result)
