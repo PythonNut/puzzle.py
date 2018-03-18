@@ -22,6 +22,9 @@ def curried(n):
         return _inner
     return curry
 
+def modidx(objs, idx):
+    return objs[idx % len(objs)]
+
 @curried(2)
 def m(*args, **kwargs):
     return list(map(*args, **kwargs))
@@ -39,8 +42,16 @@ def rot(n, string, charset=alph):
     result = []
     for char in string:
         if char in charset:
-            result.append(charset[(charset.index(char) + n) % len(charset)])
+            result.append(modidx(charset, charset.index(char) + n))
         else:
             result.append(char)
 
     return ''.join(result)
+
+def apply(f, *args, **kwargs): return f(*args, **kwargs)
+
+def decode_nums_alphabetic(nums, start=1):
+    return ''.join(modidx(alph, n-start) for n in nums)
+
+def decode_nums_ascii(nums):
+    return ''.join(chr, nums)
