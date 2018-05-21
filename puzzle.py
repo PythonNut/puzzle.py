@@ -87,3 +87,8 @@ def substrings(s):
 def chunks(l, n, overlap=False):
     for i in range(0, len(l)-n+1, 1 if overlap else n):
         yield l[i:i+n]
+
+def subsequences(l):
+    for length in range(len(l), 0, -1):
+        for combination in combinations(l, length):
+            yield combination
