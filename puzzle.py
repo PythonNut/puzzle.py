@@ -80,3 +80,6 @@ def is_palindrome(s, err=0):
         if a != b:
             penalty += 1
     return penalty <= 2 * err
+
+def substrings(s):
+    return (s[i:j+1] for i in range(len(s)) for j in range(i,len(s)))
