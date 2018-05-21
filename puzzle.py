@@ -3,6 +3,7 @@ from functools import *
 from inspect import getargspec
 from itertools import *
 from operator import *
+import numpy as np
 
 alph = ascii_lowercase
 ALPH = ascii_uppercase
@@ -59,3 +60,16 @@ def decode_nums_ascii(nums):
 def powerset(iterable):
     s = list(iterable)
     return chain.from_iterable(combinations(s, r) for r in range(len(s)+1))
+
+def int2base(x, base, digs=digits + ascii_letters):
+    if x == 0: return digs[0]
+
+    sign, digits = np.sign(x), []
+    x *= sign
+
+    while x:
+        digits.append(digs[int(x % base)])
+        x = int(x / base)
+
+    if sign < 0: digits.append('-')
+    return ''.join(reversed(digits))
