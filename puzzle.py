@@ -73,3 +73,10 @@ def int2base(x, base, digs=digits + ascii_letters):
 
     if sign < 0: digits.append('-')
     return ''.join(reversed(digits))
+
+def is_palindrome(s, err=0):
+    penalty = 0
+    for a, b in zip(s, reversed(s)):
+        if a != b:
+            penalty += 1
+    return penalty <= 2 * err
