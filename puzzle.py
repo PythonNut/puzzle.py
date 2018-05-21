@@ -83,3 +83,7 @@ def is_palindrome(s, err=0):
 
 def substrings(s):
     return (s[i:j+1] for i in range(len(s)) for j in range(i,len(s)))
+
+def chunks(l, n, overlap=False):
+    for i in range(0, len(l)-n+1, 1 if overlap else n):
+        yield l[i:i+n]
