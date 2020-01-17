@@ -14,29 +14,37 @@ num = digits
 p = product
 l = list
 
+
 def curried(n):
     def curry(fn):
         def _inner(*args):
             if len(args) < n:
                 return curried(n - len(args))(partial(fn, *args))
             return fn(*args)
+
         return _inner
+
     return curry
+
 
 def modidx(objs, idx):
     return objs[idx % len(objs)]
+
 
 @curried(2)
 def m(*args, **kwargs):
     return list(map(*args, **kwargs))
 
+
 @curried(2)
 def f(*args, **kwargs):
     return list(filter(*args, **kwargs))
 
+
 @curried(2)
 def member(objs, obj):
     return contains(objs, obj)
+
 
 @curried(2)
 def rot(n, string, charset=alph):
@@ -47,22 +55,29 @@ def rot(n, string, charset=alph):
         else:
             result.append(char)
 
-    return ''.join(result)
+    return "".join(result)
 
-def apply(f, *args, **kwargs): return f(*args, **kwargs)
+
+def apply(f, *args, **kwargs):
+    return f(*args, **kwargs)
+
 
 def decode_nums_alphabetic(nums, start=1):
-    return ''.join(modidx(alph, n-start) for n in nums)
+    return "".join(modidx(alph, n - start) for n in nums)
+
 
 def decode_nums_ascii(nums):
-    return ''.join(chr, nums)
+    return "".join(chr, nums)
+
 
 def powerset(iterable):
     s = list(iterable)
-    return chain.from_iterable(combinations(s, r) for r in range(len(s)+1))
+    return chain.from_iterable(combinations(s, r) for r in range(len(s) + 1))
+
 
 def int2base(x, base, digs=digits + ascii_letters):
-    if x == 0: return digs[0]
+    if x == 0:
+        return digs[0]
 
     sign, digits = np.sign(x), []
     x *= sign
@@ -71,8 +86,10 @@ def int2base(x, base, digs=digits + ascii_letters):
         digits.append(digs[int(x % base)])
         x = int(x / base)
 
-    if sign < 0: digits.append('-')
-    return ''.join(reversed(digits))
+    if sign < 0:
+        digits.append("-")
+    return "".join(reversed(digits))
+
 
 def is_palindrome(s, err=0):
     penalty = 0
@@ -81,17 +98,21 @@ def is_palindrome(s, err=0):
             penalty += 1
     return penalty <= 2 * err
 
+
 def substrings(s):
-    return (s[i:j+1] for i in range(len(s)) for j in range(i,len(s)))
+    return (s[i : j + 1] for i in range(len(s)) for j in range(i, len(s)))
+
 
 def chunks(l, n, overlap=False):
-    for i in range(0, len(l)-n+1, 1 if overlap else n):
-        yield l[i:i+n]
+    for i in range(0, len(l) - n + 1, 1 if overlap else n):
+        yield l[i : i + n]
+
 
 def subsequences(l):
     for length in range(len(l), 0, -1):
         for combination in combinations(l, length):
             yield combination
+
 
 class IndexConvertor(object):
     def __init__(self, shape, offset):
@@ -151,7 +172,7 @@ class VariableDispenser(object):
                 if i > len(flat):
                     A[j] = False
                 else:
-                    A[v(i)] = flat[i-1] > 0
+                    A[v(i)] = flat[i - 1] > 0
             results.append(A)
 
         return results
