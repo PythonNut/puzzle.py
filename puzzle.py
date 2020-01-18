@@ -177,3 +177,24 @@ class VariableDispenser(object):
             results.append(A)
 
         return results
+
+EIGHT_DIRECTIONS = [(0, 1), (1, 1), (1, 0), (1, -1), (0, -1), (-1, -1), (-1, 0), (-1, 1)]
+FOUR_DIRECTIONS = [(0, 1), (1, 0), (0, -1), (-1, 0)]
+
+def word_search(words, arr, directions=EIGHT_DIRECTIONS):
+    P = product(
+        range(len(arr)),
+        range(len(arr[0])),
+        words,
+        directions
+    )
+    results = defaultdict(lambda: [])
+    for i, j, word, (di, dj) in P:
+        try:
+            idxs = [(i+di*k, j+dj*k) for k in range(len(word))]
+            test = ''.join([arr[a][b] for (a, b) in idxs])
+            if test == word:
+                results[word].append(idxs)
+        except IndexError: pass
+
+    return results
