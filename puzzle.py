@@ -3,6 +3,7 @@ from functools import *
 from inspect import getargspec
 from itertools import *
 from operator import *
+from collections import *
 import numpy as np
 
 alph = ascii_lowercase
